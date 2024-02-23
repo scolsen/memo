@@ -30,13 +30,16 @@ func main() {
      case 0:
        read()
      default:
-       write(args)
+       content := []byte(strings.Join(args, " "))
+       if content[len(content)-1] != '\n' {
+         content = append(content, '\n')
+       }
+       write(content)
    } 
 }
 
-func write(args []string) {
-	content := strings.Join(args, " ")
-	err := os.WriteFile(memoloc, []byte(content), 0644)
+func write(content []byte) {
+	err := os.WriteFile(memoloc, content, 0644)
 	if err != nil {
 		os.Exit(1)
 	}
@@ -63,7 +66,7 @@ func writeInputFromStdin() {
   if err != nil {
     os.Exit(1)
   }
-  write([]string{string(buf)})
+  write(buf)
 }
 
 // isTTY returns true if the given file is a terminal emulator.
