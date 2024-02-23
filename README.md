@@ -13,6 +13,26 @@ $ memo
 $ "remember: have a great day"
 ```
 
+If you pass multiple, space delimited strings to `memo`, it recalls it all as
+one "memory":
+
+```sh
+$ memo have a great day
+$ # ... a bit later on...
+$ memo
+$ have a great day
+```
+
+`memo` can only remember one thing. If you give it something else to "remember"
+it will forget whatever you stored before:
+
+```sh
+$ echo "$(./memo)" | sed s/great/bad/g | memo
+$ # ... a bit later on...
+$ memo
+$ have a bad day
+```
+
 All memo really does is write whatever you give it to a temporary file,
 `/tmp/.memo`. Later, it reads that file. If you need to, you can always get rid
 of your memo file using other tools like `rm`. If your system doesn't have a
